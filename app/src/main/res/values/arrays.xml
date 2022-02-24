@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Name">
+        <item>Затрак</item>
+        <item>Обед</item>
+        <item>Ужин</item>
+
+    </string-array>
+</resources>
