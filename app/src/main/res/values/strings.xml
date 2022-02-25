@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MyNewNotes</string>
+    <string name="edit_name">Название заметки</string>
+    <string name="edit_description">Описание заметки</string>
+    <string name="button">Сохранить</string>
 </resources>
