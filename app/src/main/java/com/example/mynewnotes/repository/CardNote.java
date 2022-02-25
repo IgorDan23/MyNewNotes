@@ -13,7 +13,6 @@ public class CardNote {
     }
 
 
-
     public String getName() {
         return name;
     }

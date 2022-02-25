@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface CardSourse {
     int size();
+
     List<CardNote> getAllNote();
-    CardNote getCardNote (int position);
+
+    CardNote getCardNote(int position);
 }

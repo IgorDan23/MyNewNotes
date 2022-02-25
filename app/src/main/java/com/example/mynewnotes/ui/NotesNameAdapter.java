@@ -23,6 +23,7 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
         this.cardSourse = cardSourse;
         notifyDataSetChanged();
     }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -60,7 +61,7 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
             textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(onItemClickListener!=null){
+                    if (onItemClickListener != null) {
                         onItemClickListener.onItemClick();
                     }
                 }

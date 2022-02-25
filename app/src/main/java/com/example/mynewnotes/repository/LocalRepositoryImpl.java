@@ -13,18 +13,18 @@ public class LocalRepositoryImpl implements CardSourse {
     private List<CardNote> notesSourse;
     private Resources resources;
 
-    public LocalRepositoryImpl(Resources resources){
+    public LocalRepositoryImpl(Resources resources) {
         notesSourse = new ArrayList<CardNote>();
         this.resources = resources;
     }
 
-    public LocalRepositoryImpl init(){
+    public LocalRepositoryImpl init() {
         String[] name = resources.getStringArray(R.array.Name);
         String[] descriptions = resources.getStringArray(R.array.Description);
         TypedArray fon = resources.obtainTypedArray(R.array.Fon);
 
-        for(int i=0;i<name.length;i++){
-            notesSourse.add(new CardNote(name[i],descriptions[i],fon.getDrawable(i),false));
+        for (int i = 0; i < name.length; i++) {
+            notesSourse.add(new CardNote(name[i], descriptions[i], fon.getDrawable(i), false));
         }
         return this;
     }

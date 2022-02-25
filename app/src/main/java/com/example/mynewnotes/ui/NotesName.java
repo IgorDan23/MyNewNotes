@@ -58,7 +58,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClick() {
-        Toast.makeText(requireContext(),"привет",Toast.LENGTH_LONG).show();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.list, EditNoteFragment.newInstance()).addToBackStack("1").commit();
 
     }
 }
