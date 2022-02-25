@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="notes_name_size">30sp</dimen>
+    <dimen name="sizeItemList">18sp</dimen>
+    <dimen name="textDescription">20sp</dimen>
+    <dimen name="textTitle">42sp</dimen>
+    <dimen name="heightImage">100dp</dimen>
+
 </resources>
