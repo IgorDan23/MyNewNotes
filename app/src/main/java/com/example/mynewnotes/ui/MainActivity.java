@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.mynewnotes.R;
 
 public class MainActivity extends AppCompatActivity {
+    //черновик11 дз
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
