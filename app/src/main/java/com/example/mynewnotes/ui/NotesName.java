@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import com.example.mynewnotes.repository.LocalRepositoryImpl;
 public class NotesName extends Fragment implements OnItemClickListener {
     NotesNameAdapter notesNameAdapter;
     CardSourse notes;
+    RecyclerView recyclerView;
 
 
     public static NotesName newInstance() {
@@ -52,6 +54,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
             case R.id.add: {
                 notes.addNote(new CardNote("Новый день","Новые дела",R.color.four,true));
                 notesNameAdapter.notifyItemInserted(notes.size()-1);
+                recyclerView.smoothScrollToPosition(notes.size()-1);
                 return true;
             }
             case R.id.clear: {
@@ -97,9 +100,12 @@ public class NotesName extends Fragment implements OnItemClickListener {
     }
 
     void initRecycler(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+        recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setAdapter(notesNameAdapter);
         recyclerView.setHasFixedSize(true);
+        DefaultItemAnimator animator = new DefaultItemAnimator();
+        animator.setChangeDuration(1000);
+        recyclerView.setItemAnimator(animator);
 
     }
 
