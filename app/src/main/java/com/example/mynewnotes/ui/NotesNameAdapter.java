@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mynewnotes.R;
@@ -18,11 +19,20 @@ import com.example.mynewnotes.repository.CardSourse;
 public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myViewHolder> {
     private CardSourse cardSourse;
     OnItemClickListener onItemClickListener;
+    Fragment fragment;
+
+    public NotesNameAdapter(Fragment fragment) {
+        this.fragment = fragment;
+    }
+
+    public NotesNameAdapter() {
+    }
 
     public void setNotes(CardSourse cardSourse) {
         this.cardSourse = cardSourse;
         notifyDataSetChanged();
     }
+
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -58,6 +68,7 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
             textViewDescription = (TextView) itemView.findViewById(R.id.description);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             like = (ToggleButton) itemView.findViewById(R.id.like);
+            fragment.registerForContextMenu(itemView);
             textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -71,7 +82,7 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
         public void bindContantWhithView(CardNote content) {
             textViewName.setText(content.getName());
             textViewDescription.setText(content.getDescription());
-            imageView.setBackground(content.getFon());
+            imageView.setBackgroundColor(content.getFon());
             like.setChecked(content.isLike());
         }
     }

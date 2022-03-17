@@ -24,7 +24,7 @@ public class LocalRepositoryImpl implements CardSourse {
         TypedArray fon = resources.obtainTypedArray(R.array.Fon);
 
         for (int i = 0; i < name.length; i++) {
-            notesSourse.add(new CardNote(name[i], descriptions[i], fon.getDrawable(i), false));
+            notesSourse.add(new CardNote(name[i], descriptions[i], fon.getColor(i,i), false));
         }
         return this;
     }
@@ -43,4 +43,29 @@ public class LocalRepositoryImpl implements CardSourse {
     public CardNote getCardNote(int position) {
         return notesSourse.get(position);
     }
+
+    @Override
+    public void clearAll() {
+        notesSourse.clear();
+
+    }
+
+    @Override
+    public void addNote(CardNote cardNote) {
+        notesSourse.add(cardNote);
+
+    }
+
+    @Override
+    public void clearNote(int position) {
+        notesSourse.remove(position);
+
+    }
+
+    @Override
+    public void updateNote(int position, CardNote newCardNote) {
+        notesSourse.set(position, newCardNote);
+    }
+
+
 }

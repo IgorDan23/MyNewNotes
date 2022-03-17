@@ -3,4 +3,7 @@
     <string name="edit_name">Название заметки</string>
     <string name="edit_description">Описание заметки</string>
     <string name="button">Сохранить</string>
+    <string name="del">Удалить</string>
+    <string name="add">Добавить</string>
+    <string name="edit">Изменить</string>
 </resources>
