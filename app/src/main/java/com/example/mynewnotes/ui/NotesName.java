@@ -74,13 +74,13 @@ public class NotesName extends Fragment implements OnItemClickListener {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit: {
-                notes.addNote(new CardNote("Новый день","Новые дела",R.color.four,true));
-                notesNameAdapter.notifyItemInserted(notes.size()-1);
+                notes.updateNote(notesNameAdapter.getMenuPosition(),new CardNote("Новый старый день","Новые дела",R.color.four,true));
+                notesNameAdapter.notifyItemChanged(notesNameAdapter.getMenuPosition());
                 return true;
             }
             case R.id.clear: {
-                notes.clearNote(notes.size()-1);
-                notesNameAdapter.notifyDataSetChanged();
+                notes.clearNote(notesNameAdapter.getMenuPosition());
+                notesNameAdapter.notifyItemRemoved(notesNameAdapter.getMenuPosition());
                 return true;
             }
 

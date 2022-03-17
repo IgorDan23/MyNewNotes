@@ -21,6 +21,12 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
     OnItemClickListener onItemClickListener;
     Fragment fragment;
 
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
+    private int menuPosition;
+
     public NotesNameAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
@@ -69,6 +75,13 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             like = (ToggleButton) itemView.findViewById(R.id.like);
             fragment.registerForContextMenu(itemView);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    menuPosition=getLayoutPosition();
+                    return false;
+                }
+            });
             textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
