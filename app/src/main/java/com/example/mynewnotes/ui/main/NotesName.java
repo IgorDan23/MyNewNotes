@@ -23,6 +23,7 @@ import com.example.mynewnotes.publisher.Observer;
 import com.example.mynewnotes.repository.CardNote;
 import com.example.mynewnotes.repository.CardSourse;
 import com.example.mynewnotes.repository.LocalRepositoryImpl;
+import com.example.mynewnotes.repository.LocalSP;
 import com.example.mynewnotes.ui.MainActivity;
 import com.example.mynewnotes.ui.edit.EditNoteFragment;
 
@@ -43,10 +44,28 @@ public class NotesName extends Fragment implements OnItemClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initAdapter();
+        setupSource();
         initRecycler(view);
         setHasOptionsMenu(true);
         initRadioGroup(view);
+    }
+
+    void setupSource(){
+        switch (getCurrentSource()){
+            case SOURCE_ARRAY:
+                notes = new LocalRepositoryImpl(requireContext().getResources()).init();
+                initAdapter();
+                break;
+            case SOURCE_SP:
+                notes = new LocalSP(requireContext()
+                        .getSharedPreferences(LocalSP.KEY_SP_2,Context.MODE_PRIVATE)).init();
+                initAdapter();
+                break;
+            case SOURCE_GF:
+                notes = new LocalRepositoryImpl(requireContext().getResources()).init();
+                initAdapter();
+                break;
+        }
     }
 
     private void initRadioGroup(View view){
@@ -54,17 +73,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
         view.findViewById(R.id.two).setOnClickListener(listener);
         view.findViewById(R.id.three).setOnClickListener(listener);
 
-        switch (getCurrentSource()){
-            case SOURCE_ARRAY:
-                ((RadioButton) view.findViewById(R.id.one)).setChecked(true);
-                break;
-            case SOURCE_SP:
-                ((RadioButton) view.findViewById(R.id.two)).setChecked(true);
-                break;
-            case SOURCE_GF:
-                ((RadioButton) view.findViewById(R.id.three)).setChecked(true);
-                break;
-        }
+
 
     }
 
@@ -83,6 +92,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
             switch (view.getId()){
                 case R.id.one:
                     setCurrentSource(SOURCE_ARRAY);
+
                     break;
                 case R.id.two:
                     setCurrentSource(SOURCE_SP);
@@ -91,6 +101,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
                     setCurrentSource(SOURCE_GF);
                     break;
             }
+            setupSource();
         }
     };
     void  setCurrentSource(int currentSource){
@@ -176,8 +187,10 @@ public class NotesName extends Fragment implements OnItemClickListener {
     }
 
     void initAdapter() {
+        if(notesNameAdapter==null)
         notesNameAdapter = new NotesNameAdapter(this);
-        notes = new LocalRepositoryImpl(requireContext().getResources()).init();
+
+
         notesNameAdapter.setNotes(notes);
         notesNameAdapter.setOnItemClickListener(NotesName.this);
 
