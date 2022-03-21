@@ -1,6 +1,5 @@
-package com.example.mynewnotes.ui;
+package com.example.mynewnotes.ui.main;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +93,7 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
 
         public void bindContantWhithView(CardNote content) {
             textViewName.setText(content.getName());
-            textViewDescription.setText(content.getDescription());
+            textViewDescription.setText(String.format("%s%s", content.getDescription(), content.getDate()));
             imageView.setBackgroundColor(content.getFon());
             like.setChecked(content.isLike());
         }

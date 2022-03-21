@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/heightImage"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:scaleType="fitXY" />
 

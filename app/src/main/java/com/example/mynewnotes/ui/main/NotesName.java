@@ -1,4 +1,4 @@
-package com.example.mynewnotes.ui;
+package com.example.mynewnotes.ui.main;
 
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -8,19 +8,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mynewnotes.R;
+import com.example.mynewnotes.publisher.Observer;
 import com.example.mynewnotes.repository.CardNote;
 import com.example.mynewnotes.repository.CardSourse;
 import com.example.mynewnotes.repository.LocalRepositoryImpl;
+import com.example.mynewnotes.ui.MainActivity;
+import com.example.mynewnotes.ui.edit.EditNoteFragment;
+
+import java.util.Calendar;
 
 
 public class NotesName extends Fragment implements OnItemClickListener {
@@ -52,7 +55,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add: {
-                notes.addNote(new CardNote("Новый день","Новые дела",R.color.four,true));
+                notes.addNote(new CardNote("Новый день","Новые дела",R.color.four,true, Calendar.getInstance().getTime()));
                 notesNameAdapter.notifyItemInserted(notes.size()-1);
                 recyclerView.smoothScrollToPosition(notes.size()-1);
                 return true;
@@ -75,10 +78,21 @@ public class NotesName extends Fragment implements OnItemClickListener {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int menuPosition= notesNameAdapter.getMenuPosition();
         switch (item.getItemId()) {
             case R.id.edit: {
-                notes.updateNote(notesNameAdapter.getMenuPosition(),new CardNote("Новый старый день","Новые дела",R.color.four,true));
-                notesNameAdapter.notifyItemChanged(notesNameAdapter.getMenuPosition());
+                Observer observer = new Observer() {
+                    @Override
+                    public void receiveMessage(CardNote cardNote) {
+                        ((MainActivity) requireActivity()).getPublisher().unsubscribe(this);
+                        notes.updateNote(menuPosition,cardNote);
+                        notesNameAdapter.notifyItemChanged(menuPosition);
+
+                    }
+                };
+                ((MainActivity) requireActivity()).getPublisher().subscribe(observer);
+             ((MainActivity) requireActivity()).getNavigation().addFragment(EditNoteFragment.newInstance(notes.getCardNote(menuPosition)),true);;
+
                 return true;
             }
             case R.id.clear: {
@@ -117,7 +131,9 @@ public class NotesName extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClick() {
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.list, EditNoteFragment.newInstance()).addToBackStack("1").commit();
-
+        /*requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.list, EditNoteFragment.newInstance(car)).addToBackStack("1").commit();
+*/
     }
+
+
 }
