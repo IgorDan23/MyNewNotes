@@ -77,7 +77,7 @@ public class NotesNameAdapter extends RecyclerView.Adapter<NotesNameAdapter.myVi
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    menuPosition=getLayoutPosition();
+                    menuPosition = getLayoutPosition();
                     return false;
                 }
             });

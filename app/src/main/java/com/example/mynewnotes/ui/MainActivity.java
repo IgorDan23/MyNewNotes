@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        publisher=new Publisher();
-        navigation= new Navigation(getSupportFragmentManager());
-        if(savedInstanceState==null) {
+        publisher = new Publisher();
+        navigation = new Navigation(getSupportFragmentManager());
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.list, NotesName.newInstance()).commit();
         }
     }

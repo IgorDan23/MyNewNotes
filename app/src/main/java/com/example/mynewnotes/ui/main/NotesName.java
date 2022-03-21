@@ -47,7 +47,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.notes_menu,menu);
+        inflater.inflate(R.menu.notes_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -55,9 +55,9 @@ public class NotesName extends Fragment implements OnItemClickListener {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add: {
-                notes.addNote(new CardNote("Новый день","Новые дела",R.color.four,true, Calendar.getInstance().getTime()));
-                notesNameAdapter.notifyItemInserted(notes.size()-1);
-                recyclerView.smoothScrollToPosition(notes.size()-1);
+                notes.addNote(new CardNote("Новый день", "Новые дела", R.color.four, true, Calendar.getInstance().getTime()));
+                notesNameAdapter.notifyItemInserted(notes.size() - 1);
+                recyclerView.smoothScrollToPosition(notes.size() - 1);
                 return true;
             }
             case R.id.clear: {
@@ -73,25 +73,26 @@ public class NotesName extends Fragment implements OnItemClickListener {
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        requireActivity().getMenuInflater().inflate(R.menu.note_menu,menu);
+        requireActivity().getMenuInflater().inflate(R.menu.note_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int menuPosition= notesNameAdapter.getMenuPosition();
+        int menuPosition = notesNameAdapter.getMenuPosition();
         switch (item.getItemId()) {
             case R.id.edit: {
                 Observer observer = new Observer() {
                     @Override
                     public void receiveMessage(CardNote cardNote) {
                         ((MainActivity) requireActivity()).getPublisher().unsubscribe(this);
-                        notes.updateNote(menuPosition,cardNote);
+                        notes.updateNote(menuPosition, cardNote);
                         notesNameAdapter.notifyItemChanged(menuPosition);
 
                     }
                 };
                 ((MainActivity) requireActivity()).getPublisher().subscribe(observer);
-             ((MainActivity) requireActivity()).getNavigation().addFragment(EditNoteFragment.newInstance(notes.getCardNote(menuPosition)),true);;
+                ((MainActivity) requireActivity()).getNavigation().addFragment(EditNoteFragment.newInstance(notes.getCardNote(menuPosition)), true);
+                ;
 
                 return true;
             }
@@ -105,7 +106,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
         return super.onContextItemSelected(item);
     }
 
-    void initAdapter(){
+    void initAdapter() {
         notesNameAdapter = new NotesNameAdapter(this);
         notes = new LocalRepositoryImpl(requireContext().getResources()).init();
         notesNameAdapter.setNotes(notes);
@@ -132,7 +133,7 @@ public class NotesName extends Fragment implements OnItemClickListener {
     @Override
     public void onItemClick() {
         /*requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.list, EditNoteFragment.newInstance(car)).addToBackStack("1").commit();
-*/
+         */
     }
 
 

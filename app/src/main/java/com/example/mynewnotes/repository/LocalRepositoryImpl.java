@@ -25,7 +25,7 @@ public class LocalRepositoryImpl implements CardSourse {
         TypedArray fon = resources.obtainTypedArray(R.array.Fon);
 
         for (int i = 0; i < name.length; i++) {
-            notesSourse.add(new CardNote(name[i], descriptions[i], fon.getColor(i,i), false, Calendar.getInstance().getTime()));
+            notesSourse.add(new CardNote(name[i], descriptions[i], fon.getColor(i, i), false, Calendar.getInstance().getTime()));
         }
         return this;
     }

@@ -58,8 +58,8 @@ public class EditNoteFragment extends Fragment {
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(cardNote.getDate());
-            ((DatePicker) view.findViewById(R.id.datePicker)).init(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar
-                    .get(Calendar.DAY_OF_MONTH),null);
+            ((DatePicker) view.findViewById(R.id.datePicker)).init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar
+                    .get(Calendar.DAY_OF_MONTH), null);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,20 +68,16 @@ public class EditNoteFragment extends Fragment {
                     cardNote.setDescription(edit_description.getText().toString());
 
                     DatePicker datePicker = ((DatePicker) view.findViewById(R.id.datePicker));
-                    calendar.set(Calendar.YEAR,datePicker.getYear());
-                    calendar.set(Calendar.MONTH,datePicker.getMonth());
-                    calendar.set(Calendar.DAY_OF_MONTH,datePicker.getDayOfMonth());
+                    calendar.set(Calendar.YEAR, datePicker.getYear());
+                    calendar.set(Calendar.MONTH, datePicker.getMonth());
+                    calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
 
                     cardNote.setDate(calendar.getTime());
-
-
-
 
 
                     Toast.makeText(requireContext(), "Изменения приняты.", Toast.LENGTH_LONG).show();
                     ((MainActivity) requireActivity()).getPublisher().sendMessage(cardNote);
                     ((MainActivity) requireActivity()).getSupportFragmentManager().popBackStack();
-
 
 
                 }

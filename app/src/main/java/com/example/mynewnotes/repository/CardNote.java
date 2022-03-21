@@ -22,7 +22,6 @@ public class CardNote implements Parcelable {
     }
 
 
-
     protected CardNote(Parcel in) {
         name = in.readString();
         description = in.readString();

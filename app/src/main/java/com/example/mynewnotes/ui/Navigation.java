@@ -15,10 +15,10 @@ public class Navigation {
         this.fragmentManager = fragmentManager;
     }
 
-    public void addFragment(Fragment fragment, boolean addBackStack){
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.list,fragment);
-        if (addBackStack){
+    public void addFragment(Fragment fragment, boolean addBackStack) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.list, fragment);
+        if (addBackStack) {
             fragmentTransaction.addToBackStack("");
         }
         fragmentTransaction.commit();
