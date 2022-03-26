@@ -24,6 +24,8 @@ import com.example.mynewnotes.repository.CardNote;
 import com.example.mynewnotes.repository.CardSourse;
 import com.example.mynewnotes.repository.LocalRepositoryImpl;
 import com.example.mynewnotes.repository.LocalSP;
+import com.example.mynewnotes.repository.RemoteFireStoreRepositoryImpl;
+import com.example.mynewnotes.repository.RemoteFireStoreResponse;
 import com.example.mynewnotes.ui.MainActivity;
 import com.example.mynewnotes.ui.edit.EditNoteFragment;
 
@@ -50,29 +52,34 @@ public class NotesName extends Fragment implements OnItemClickListener {
         initRadioGroup(view);
     }
 
-    void setupSource(){
-        switch (getCurrentSource()){
+    void setupSource() {
+        switch (getCurrentSource()) {
             case SOURCE_ARRAY:
                 notes = new LocalRepositoryImpl(requireContext().getResources()).init();
                 initAdapter();
                 break;
             case SOURCE_SP:
                 notes = new LocalSP(requireContext()
-                        .getSharedPreferences(LocalSP.KEY_SP_2,Context.MODE_PRIVATE)).init();
+                        .getSharedPreferences(LocalSP.KEY_SP_2, Context.MODE_PRIVATE)).init();
                 initAdapter();
                 break;
             case SOURCE_GF:
-                notes = new LocalRepositoryImpl(requireContext().getResources()).init();
+                notes = new RemoteFireStoreRepositoryImpl().init(new RemoteFireStoreResponse() {
+                    @Override
+                    public void initialized(CardSourse cardSourse) {
+                        initAdapter();
+
+                    }
+                });
                 initAdapter();
                 break;
         }
     }
 
-    private void initRadioGroup(View view){
+    private void initRadioGroup(View view) {
         view.findViewById(R.id.one).setOnClickListener(listener);
         view.findViewById(R.id.two).setOnClickListener(listener);
         view.findViewById(R.id.three).setOnClickListener(listener);
-
 
 
     }
@@ -85,11 +92,10 @@ public class NotesName extends Fragment implements OnItemClickListener {
     static String KEY_SP_One = "key_1";
 
 
-
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.one:
                     setCurrentSource(SOURCE_ARRAY);
 
@@ -97,32 +103,30 @@ public class NotesName extends Fragment implements OnItemClickListener {
                 case R.id.two:
                     setCurrentSource(SOURCE_SP);
                     break;
-                case  R.id.three:
+                case R.id.three:
                     setCurrentSource(SOURCE_GF);
                     break;
             }
             setupSource();
         }
     };
-    void  setCurrentSource(int currentSource){
 
-        SharedPreferences sharedPreferences=requireContext()
+    void setCurrentSource(int currentSource) {
+
+        SharedPreferences sharedPreferences = requireContext()
                 .getSharedPreferences(KEY_SP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(KEY_SP_One,currentSource);
+        editor.putInt(KEY_SP_One, currentSource);
         editor.apply();
 
     }
 
-    int getCurrentSource(){
-        SharedPreferences sharedPreferences=requireContext()
+    int getCurrentSource() {
+        SharedPreferences sharedPreferences = requireContext()
                 .getSharedPreferences(KEY_SP, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(KEY_SP_One,SOURCE_ARRAY);
+        return sharedPreferences.getInt(KEY_SP_One, SOURCE_ARRAY);
 
     }
-
-
-
 
 
     @Override
@@ -187,8 +191,8 @@ public class NotesName extends Fragment implements OnItemClickListener {
     }
 
     void initAdapter() {
-        if(notesNameAdapter==null)
-        notesNameAdapter = new NotesNameAdapter(this);
+        if (notesNameAdapter == null)
+            notesNameAdapter = new NotesNameAdapter(this);
 
 
         notesNameAdapter.setNotes(notes);
